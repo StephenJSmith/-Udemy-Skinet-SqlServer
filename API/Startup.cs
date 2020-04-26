@@ -28,6 +28,14 @@ namespace Infrastructure
           x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
       services.AddApplicationServices();
       services.AddSwaggerDocumentation();
+      services.AddCors(option => {
+        option.AddPolicy("CorsPolicy", policy => {
+          policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins(_config["ClientUrl"]);
+        });
+      });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,6 +47,8 @@ namespace Infrastructure
 
       app.UseRouting();
       app.UseStaticFiles();
+
+      app.UseCors("CorsPolicy");
 
       app.UseAuthorization();
 
