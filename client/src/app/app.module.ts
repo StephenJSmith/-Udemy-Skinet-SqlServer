@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ShopModule } from './shop/shop.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { ShopModule } from './shop/shop.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    ShopModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
