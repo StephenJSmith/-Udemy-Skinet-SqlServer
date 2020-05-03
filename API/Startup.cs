@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace Infrastructure
 {
@@ -26,6 +27,14 @@ namespace Infrastructure
       services.AddControllers();
       services.AddDbContext<StoreContext>(x =>
           x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+
+      services.AddSingleton<IConnectionMultiplexer>(options => {
+        var redisCnn = _config.GetConnectionString("Redis");
+        var configuration = ConfigurationOptions.Parse(redisCnn, true);
+
+        return ConnectionMultiplexer.Connect(configuration);
+      });
+
       services.AddApplicationServices();
       services.AddSwaggerDocumentation();
       services.AddCors(option => {
