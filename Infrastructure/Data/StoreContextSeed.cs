@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -64,6 +66,24 @@ namespace Infrastructure.Data
           }
 
           await context.SaveChangesAsync();
+        }
+
+        if (!context.DeliveryMethods.Any())
+        {
+          // TODO: Unable to get SET IDENTITY_INSERT ON/OFF to work
+          // Removed Id identity column from .json in alternative file
+          var dmData =
+              File.ReadAllText("../Infrastructure/Data/SeedData/deliveryWithoutId.json");
+          var methods = JsonConvert.DeserializeObject<List<DeliveryMethod>>(dmData);
+
+          foreach (var item in methods)
+          {
+            context.DeliveryMethods.Add(item);
+          }
+
+          await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.DeliveryMethods ON");
+          await context.SaveChangesAsync();
+          await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.DeliveryMethods OFF");
         }
       }
       catch (Exception ex)
