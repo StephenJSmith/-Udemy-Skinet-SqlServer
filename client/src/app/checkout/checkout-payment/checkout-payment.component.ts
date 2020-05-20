@@ -46,7 +46,7 @@ export class CheckoutPaymentComponent implements OnInit {
   }
 
   submitOrder() {
-    const basket = this.basketService.getCurentBasketValue();
+    const basket = this.basketService.getCurrentBasketValue();
     const orderToCreate = this.getOrderToCreate(basket);
     this.checkoutService.createOrder(orderToCreate)
       .subscribe((order: IOrder) => {

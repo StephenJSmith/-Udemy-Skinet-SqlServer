@@ -4,6 +4,7 @@ import { IBasketItem } from './basketItem';
 export interface IBasket {
   id: string;
   items: IBasketItem[];
+  deliveryMethodId?: number;
 }
 
 export class Basket implements IBasket {

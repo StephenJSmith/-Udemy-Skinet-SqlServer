@@ -53,12 +53,12 @@ export class BasketService {
     );
   }
 
-  getCurentBasketValue() {
+  getCurrentBasketValue() {
     return this.basketSource.value;
   }
 
   incrementItemQuantity(item: IBasketItem) {
-    const basket = this.getCurentBasketValue();
+    const basket = this.getCurrentBasketValue();
     const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
     if (foundItemIndex < 0) { return; }
 
@@ -67,7 +67,7 @@ export class BasketService {
   }
 
   decrementItemQuantity(item: IBasketItem) {
-    const basket = this.getCurentBasketValue();
+    const basket = this.getCurrentBasketValue();
     const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
     if (foundItemIndex < 0) { return; }
 
@@ -80,7 +80,7 @@ export class BasketService {
   }
 
   removeItemFromBasket(item: IBasketItem) {
-    const basket = this.getCurentBasketValue();
+    const basket = this.getCurrentBasketValue();
     if (basket.items.some(x => x.id === item.id)) {
       basket.items = basket.items.filter(i => i.id !== item.id);
       if (basket.items.length > 0) {
@@ -115,13 +115,13 @@ export class BasketService {
       item,
       quantity
     );
-    const basket = this.getCurentBasketValue() ?? this.createBasket();
+    const basket = this.getCurrentBasketValue() ?? this.createBasket();
     basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     this.setBasket(basket);
   }
 
   private calculateTotals() {
-    const basket = this.getCurentBasketValue();
+    const basket = this.getCurrentBasketValue();
     const shipping = this.shipping;
     const subtotal = basket.items.reduce((a, b) => b.price * b.quantity + a, 0);
     const total = subtotal + shipping;
