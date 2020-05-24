@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { CheckoutService } from '../checkout.service';
 import { IDeliveryMethod } from 'src/app/shared/models/deliveryMethod';
 import { BasketService } from 'src/app/basket/basket.service';
@@ -12,6 +12,10 @@ import { BasketService } from 'src/app/basket/basket.service';
 export class CheckoutDeliveryComponent implements OnInit {
   @Input() checkoutForm: FormGroup;
   deliveryMethods: IDeliveryMethod[];
+
+  get deliveryForm(): AbstractControl {
+    return this.checkoutForm.get('deliveryForm');
+  }
 
   constructor(
     private checkoutService: CheckoutService,
