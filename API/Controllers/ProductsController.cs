@@ -30,6 +30,7 @@ namespace Infrastructure.Controllers
       _productsRepo = productsRepo;
     }
 
+    [Cached(600)]
     [HttpGet]
     public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
       [FromQuery]ProductSpecParams productParams)
@@ -49,6 +50,7 @@ namespace Infrastructure.Controllers
       return Ok(pagination);
     }
 
+    [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -70,6 +72,7 @@ namespace Infrastructure.Controllers
       return Ok(dto);
     }
 
+    [Cached(600)]
     [HttpGet("brands")]
     public async Task<ActionResult<List<ProductBrand>>> GetBrands()
     {
@@ -78,6 +81,7 @@ namespace Infrastructure.Controllers
       return Ok(items);
     }
 
+    [Cached(600)]
     [HttpGet("types")]
     public async Task<ActionResult<List<ProductType>>> GetTypes()
     {
